@@ -69,5 +69,10 @@ var renderWizard = function (wizard) {
 for (var i = 0; i < 4; i++) {
   renderWizard(wizards[i]);
 }
-similarWizardList.appendChild(fragment);
+
+var insertElement = function (wrapper, item) {
+  wrapper.appendChild(item);
+};
+
+insertElement(similarWizardList, fragment);
 
