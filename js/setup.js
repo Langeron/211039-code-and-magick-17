@@ -2,8 +2,8 @@
 
 var userDialog = document.querySelector('.setup');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
-var similarWizardList = document.querySelector('.setup-similar-list');
-var similarContainer = document.querySelector('.setup-similar');
+var similarContainer = userDialog.querySelector('.setup-similar');
+var similarWizardList = similarContainer.querySelector('.setup-similar-list');
 var fragment = document.createDocumentFragment();
 
 userDialog.classList.remove('hidden');
@@ -17,7 +17,8 @@ var WIZARD_NAMES = [
   'Виктор',
   'Ирвинг'
 ];
-var WIZARD_SURNAME = [
+
+var WIZARD_SURNAMES = [
   'да Марья',
   'Верон',
   'Мирабелла',
@@ -26,7 +27,8 @@ var WIZARD_SURNAME = [
   'Топольницкая',
   'Нионго'
 ];
-var WIZARD_COAT_COLOR = [
+
+var WIZARD_COAT_COLORS = [
   'rgb(101, 137, 164)',
   'rgb(241, 43, 107)',
   'rgb(146, 100, 161)',
@@ -34,13 +36,16 @@ var WIZARD_COAT_COLOR = [
   'rgb(215, 210, 55)',
   'rgb(0, 0, 0)'
 ];
-var WIZARD_EYES_COLOR = [
+
+var WIZARD_EYES_COLORS = [
   'black',
   'red',
   'blue',
   'yellow',
   'green'
 ];
+
+var COUNT_WIZARD = 4;
 
 var wizards = [];
 
@@ -54,9 +59,13 @@ var getWizardFeatures = function (name, surname, coatColor, eyesColor) {
   wizards.push(wizardFeature);
 };
 
-for (var i = 0; i < 4; i++) {
-  getWizardFeatures(WIZARD_NAMES[i], WIZARD_SURNAME[i], WIZARD_COAT_COLOR[i], WIZARD_EYES_COLOR[i]);
-}
+var getArrayWizards = function (count) {
+  for (var i = 0; i < count; i++) {
+    getWizardFeatures(WIZARD_NAMES[i], WIZARD_SURNAMES[i], WIZARD_COAT_COLORS[i], WIZARD_EYES_COLORS[i]);
+  }
+};
+
+getArrayWizards(COUNT_WIZARD);
 
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
@@ -66,13 +75,9 @@ var renderWizard = function (wizard) {
   fragment.appendChild(wizardElement);
 };
 
-for (var i = 0; i < 4; i++) {
+for (var i = 0; i < COUNT_WIZARD; i++) {
   renderWizard(wizards[i]);
 }
 
-var insertElement = function (wrapper, item) {
-  wrapper.appendChild(item);
-};
-
-insertElement(similarWizardList, fragment);
+similarWizardList.appendChild(fragment);
 
