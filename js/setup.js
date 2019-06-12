@@ -1,0 +1,83 @@
+'use strict';
+
+var userDialog = document.querySelector('.setup');
+var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+var similarContainer = userDialog.querySelector('.setup-similar');
+var similarWizardList = similarContainer.querySelector('.setup-similar-list');
+var fragment = document.createDocumentFragment();
+
+userDialog.classList.remove('hidden');
+similarContainer.classList.remove('hidden');
+
+var WIZARD_NAMES = [
+  'Иван',
+  'Хуан Себастьян',
+  'Мария',
+  'Кристоф',
+  'Виктор',
+  'Ирвинг'
+];
+
+var WIZARD_SURNAMES = [
+  'да Марья',
+  'Верон',
+  'Мирабелла',
+  'Вальц',
+  'Онопко',
+  'Топольницкая',
+  'Нионго'
+];
+
+var WIZARD_COAT_COLORS = [
+  'rgb(101, 137, 164)',
+  'rgb(241, 43, 107)',
+  'rgb(146, 100, 161)',
+  'rgb(56, 159, 117)',
+  'rgb(215, 210, 55)',
+  'rgb(0, 0, 0)'
+];
+
+var WIZARD_EYES_COLORS = [
+  'black',
+  'red',
+  'blue',
+  'yellow',
+  'green'
+];
+
+var COUNT_WIZARD = 4;
+
+var wizards = [];
+
+var getWizardFeatures = function (name, surname, coatColor, eyesColor) {
+  var wizardFeature = {
+    name: name + ' ' + surname,
+    coatColor: coatColor,
+    eyesColor: eyesColor
+  };
+
+  wizards.push(wizardFeature);
+};
+
+var getArrayWizards = function (count) {
+  for (var i = 0; i < count; i++) {
+    getWizardFeatures(WIZARD_NAMES[i], WIZARD_SURNAMES[i], WIZARD_COAT_COLORS[i], WIZARD_EYES_COLORS[i]);
+  }
+};
+
+getArrayWizards(COUNT_WIZARD);
+
+var renderWizard = function (wizard) {
+  var wizardElement = similarWizardTemplate.cloneNode(true);
+  wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
+  wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
+  wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
+  fragment.appendChild(wizardElement);
+};
+
+for (var i = 0; i < COUNT_WIZARD; i++) {
+  renderWizard(wizards[i]);
+}
+
+similarWizardList.appendChild(fragment);
+
