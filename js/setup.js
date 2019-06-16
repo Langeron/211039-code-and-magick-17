@@ -47,8 +47,6 @@ var WIZARD_EYES_COLORS = [
 
 var COUNT_WIZARD = 4;
 
-var wizards = [];
-
 var getWizardFeatures = function (name, surname, coatColor, eyesColor) {
   var wizardFeature = {
     name: name + ' ' + surname,
@@ -56,16 +54,19 @@ var getWizardFeatures = function (name, surname, coatColor, eyesColor) {
     eyesColor: eyesColor
   };
 
-  wizards.push(wizardFeature);
+  return wizardFeature;
 };
 
 var getArrayWizards = function (count) {
+  var wizards = [];
   for (var i = 0; i < count; i++) {
-    getWizardFeatures(WIZARD_NAMES[i], WIZARD_SURNAMES[i], WIZARD_COAT_COLORS[i], WIZARD_EYES_COLORS[i]);
+    wizards.push(getWizardFeatures(WIZARD_NAMES[i], WIZARD_SURNAMES[i], WIZARD_COAT_COLORS[i], WIZARD_EYES_COLORS[i]));
   }
+
+  return wizards;
 };
 
-getArrayWizards(COUNT_WIZARD);
+var wizards = getArrayWizards(COUNT_WIZARD);
 
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
