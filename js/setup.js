@@ -6,7 +6,6 @@ var similarContainer = userDialog.querySelector('.setup-similar');
 var similarWizardList = similarContainer.querySelector('.setup-similar-list');
 var fragment = document.createDocumentFragment();
 
-userDialog.classList.remove('hidden');
 similarContainer.classList.remove('hidden');
 
 var WIZARD_NAMES = [
@@ -82,3 +81,49 @@ for (var i = 0; i < COUNT_WIZARD; i++) {
 
 similarWizardList.appendChild(fragment);
 
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = userDialog.querySelector('.setup-close');
+var setupUserName = userDialog.querySelector('.setup-user-name');
+
+var KEY_CODE = {
+  ENTER: 13,
+  ESC: 27
+};
+
+var closePopup = function () {
+  userDialog.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === KEY_CODE.ESC) {
+    if (setupUserName !== document.activeElement) {
+      closePopup();
+    }
+  }
+};
+
+var openPopup = function () {
+  userDialog.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === KEY_CODE.ENTER) {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === KEY_CODE.ENTER) {
+    closePopup();
+  }
+});
