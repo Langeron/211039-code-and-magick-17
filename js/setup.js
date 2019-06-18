@@ -153,21 +153,22 @@ var inputFireballColor = userDialog.querySelector('input[name="fireball-color"]'
 
 var onWizardClick = function (evt) {
   var target = evt.currentTarget;
+  var randomValue;
   switch (target) {
     case wizardCoat:
-      var randomValue = WIZARD_COAT_COLORS[getRandomNumber(0, WIZARD_COAT_COLORS.length)];
+      randomValue = WIZARD_COAT_COLORS[getRandomNumber(0, WIZARD_COAT_COLORS.length)];
       wizardCoat.style.fill = randomValue;
       inputCoatColor.value = randomValue;
       break;
 
     case wizardEyes:
-      var randomValue = WIZARD_EYES_COLORS[getRandomNumber(0, WIZARD_EYES_COLORS.length)];
+      randomValue = WIZARD_EYES_COLORS[getRandomNumber(0, WIZARD_EYES_COLORS.length)];
       wizardEyes.style.fill = randomValue;
       inputEyesColor.value = randomValue;
       break;
 
     case wizardFireball:
-      var randomValue = WIZARD_FIREBALL_COLORS[getRandomNumber(0, WIZARD_FIREBALL_COLORS.length)];
+      randomValue = WIZARD_FIREBALL_COLORS[getRandomNumber(0, WIZARD_FIREBALL_COLORS.length)];
       wizardFireball.style.backgroundColor = randomValue;
       inputFireballColor.value = randomValue;
       break;
