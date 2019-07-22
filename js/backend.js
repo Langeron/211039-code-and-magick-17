@@ -4,7 +4,8 @@
   var backend = function (url, method, onSuccess, onError, data) {
     var status = {
       200: 200
-    }
+    };
+
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -16,7 +17,7 @@
       }
     });
     xhr.open(method, url);
-    xhr.send(data)
+    xhr.send(data);
   };
 
   window.backend = backend;
