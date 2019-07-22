@@ -53,51 +53,13 @@
   };
 
   var userDialog = document.querySelector('.setup');
-  var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
   var similarContainer = userDialog.querySelector('.setup-similar');
-  var similarWizardList = similarContainer.querySelector('.setup-similar-list');
-  var fragment = document.createDocumentFragment();
-
   similarContainer.classList.remove('hidden');
 
   var getRandomNumber = function (min, max) {
     return Math.round(Math.random() * (max - min)) + min;
   };
 
-  var getWizardFeatures = function (name, surname, coatColor, eyesColor) {
-    var wizardFeature = {
-      name: name + ' ' + surname,
-      coatColor: coatColor,
-      eyesColor: eyesColor
-    };
-
-    return wizardFeature;
-  };
-
-  var getArrayWizards = function (count) {
-    var wizards = [];
-    for (var i = 0; i < count; i++) {
-      wizards.push(getWizardFeatures(WIZARD_NAMES[i], WIZARD_SURNAMES[i], WIZARD_COAT_COLORS[i], WIZARD_EYES_COLORS[i]));
-    }
-
-    return wizards;
-  };
-
-  var wizards = getArrayWizards(COUNT_WIZARD);
-
-  var renderWizard = function (wizard) {
-    var wizardElement = similarWizardTemplate.cloneNode(true);
-    wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
-    fragment.appendChild(wizardElement);
-  };
-
-  for (var i = 0; i < COUNT_WIZARD; i++) {
-    renderWizard(wizards[i]);
-  }
-
-  similarWizardList.appendChild(fragment);
 
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = userDialog.querySelector('.setup-close');
@@ -178,124 +140,18 @@
     }
   };
 
-  var dialogHandler = userDialog.querySelector('.upload');
-  dialogHandler.addEventListener('mousedown', function (evt) {
+  var onSuccess = function (response) {
+    closePopup();
+  };
+
+  var onError = function (mes) {
+    closePopup();
+  };
+
+  var form = document.querySelector('.setup-wizard-form');
+  form.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    var startCoord = {
-      x: evt.clientX,
-      y: evt.clientY
-    };
-
-    var dragged;
-
-    var onMouseMove = function (moveEvt) {
-      moveEvt.preventDefault();
-      dragged = true;
-
-      var shift = {
-        x: startCoord.x - moveEvt.clientX,
-        y: startCoord.y - moveEvt.clientY
-      };
-
-      startCoord = {
-        x: moveEvt.clientX,
-        y: moveEvt.clientY
-      };
-
-      userDialog.style.left = (userDialog.offsetLeft - shift.x) + 'px';
-      userDialog.style.top = (userDialog.offsetTop - shift.y) + 'px';
-    };
-
-    var onMouseup = function (upEvt) {
-      upEvt.preventDefault();
-
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseup);
-
-      if (dragged) {
-        var onClickPreventDefault = function (clickEvt) {
-          clickEvt.preventDefault();
-          userDialog.removeEventListener('click', onClickPreventDefault);
-        };
-
-        userDialog.addEventListener('click', onClickPreventDefault);
-      }
-    };
-
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseup);
-  });
-
-  var artifacts = userDialog.querySelectorAll('.setup-artifacts-shop .setup-artifacts-cell img');
-  var artifactsBackpack = userDialog.querySelector('.setup-artifacts');
-  var backpackCells = artifactsBackpack.querySelectorAll('.setup-artifacts .setup-artifacts-cell');
-
-  artifacts.forEach(function (artifact) {
-
-    var moveArtifact = function (evt) {
-      evt.preventDefault();
-
-      var startCoord = {
-        x: evt.clientX,
-        y: evt.clientY
-      };
-
-      var onMouseMove = function (moveEvt) {
-        moveEvt.preventDefault();
-
-        var shift = {
-          x: startCoord.x - moveEvt.clientX,
-          y: startCoord.y - moveEvt.clientY
-        };
-
-        startCoord = {
-          x: moveEvt.clientX,
-          y: moveEvt.clientY
-        };
-
-        artifact.style.position = 'absolute';
-        artifact.style.left = (artifact.offsetLeft - shift.x) + 'px';
-        artifact.style.top = (artifact.offsetTop - shift.y) + 'px';
-
-      };
-
-      var onMouseUp = function (upEvt) {
-        upEvt.preventDefault();
-
-        var addElement = function () {
-          for (var cell = 0; i < backpackCells.length; i++) {
-            if (backpackCells[cell].children.length === 0) {
-              backpackCells[cell].appendChild(artifact);
-              artifact.style.position = 'static';
-              artifact.style.left = '';
-              artifact.style.top = '';
-              artifact.classList.add('in-backpack');
-              break;
-            }
-          }
-          artifactsBackpack.removeEventListener('mouseover', addElement);
-        };
-
-        artifactsBackpack.addEventListener('mouseover', addElement);
-
-        if (artifact.classList.contains('in-backpack')) {
-          artifact.removeEventListener('mousedown', moveArtifact);
-        } else {
-          artifact.style.position = 'static';
-          artifact.style.left = '';
-          artifact.style.top = '';
-        }
-
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mousemove', onMouseUp);
-      };
-
-
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
-    };
-
-    artifact.addEventListener('mousedown', moveArtifact);
+    window.backend(window.util.Url.UPLOAD, window.util.Method.POST, onSuccess, onError, new FormData(form));
   });
 })();
 
