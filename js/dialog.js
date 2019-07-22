@@ -1,25 +1,6 @@
 'use strict';
 
 (function () {
-  var WIZARD_NAMES = [
-    'Иван',
-    'Хуан Себастьян',
-    'Мария',
-    'Кристоф',
-    'Виктор',
-    'Ирвинг'
-  ];
-
-  var WIZARD_SURNAMES = [
-    'да Марья',
-    'Верон',
-    'Мирабелла',
-    'Вальц',
-    'Онопко',
-    'Топольницкая',
-    'Нионго'
-  ];
-
   var WIZARD_COAT_COLORS = [
     'rgb(101, 137, 164)',
     'rgb(241, 43, 107)',
@@ -44,8 +25,6 @@
     '#e848d5',
     '#e6e848'
   ];
-
-  var COUNT_WIZARD = 4;
 
   var KEY_CODE = {
     ENTER: 13,
@@ -140,11 +119,11 @@
     }
   };
 
-  var onSuccess = function (response) {
+  var onSuccess = function () {
     closePopup();
   };
 
-  var onError = function (mes) {
+  var onError = function () {
     closePopup();
   };
 
