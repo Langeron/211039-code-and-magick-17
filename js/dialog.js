@@ -123,14 +123,17 @@
     closePopup();
   };
 
-  var onError = function () {
+  var onError = function (message) {
+    window.utils.createErrorBlock(message);
     closePopup();
+
+    document.addEventListener('mousedown', window.utils.onErrorRemove);
   };
 
   var form = document.querySelector('.setup-wizard-form');
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.backend(window.util.Url.UPLOAD, window.util.Method.POST, onSuccess, onError, new FormData(form));
+    window.backend.save(new FormData(form), onSuccess, onError);
   });
 })();
 

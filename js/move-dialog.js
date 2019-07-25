@@ -3,7 +3,7 @@
 (function () {
   var Coordinate = function (x, y) {
     this.x = x;
-    this.y = y
+    this.y = y;
   };
 
   var userDialog = document.querySelector('.setup');
@@ -18,8 +18,8 @@
       moveEvt.preventDefault();
       dragged = true;
 
-      var shift = new Coordinate(startCoord.x - moveEvt.clientX, startCoord.y - moveEvt.clientY)
-      startCoord = new Coordinate(moveEvt.clientX, moveEvt.clientY)
+      var shift = new Coordinate(startCoord.x - moveEvt.clientX, startCoord.y - moveEvt.clientY);
+      startCoord = new Coordinate(moveEvt.clientX, moveEvt.clientY);
 
       userDialog.style.left = (userDialog.offsetLeft - shift.x) + 'px';
       userDialog.style.top = (userDialog.offsetTop - shift.y) + 'px';

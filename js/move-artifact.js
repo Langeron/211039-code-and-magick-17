@@ -1,11 +1,13 @@
+'use strict';
+
 (function () {
 
   var Coordinate = function (x, y) {
     this.x = x;
-    this.y = y
+    this.y = y;
   };
 
-  var artifacts = document.querySelectorAll('.setup-artifacts-shop .setup-artifacts-cell img')
+  var artifacts = document.querySelectorAll('.setup-artifacts-shop .setup-artifacts-cell img');
   var artifactsBackpack = document.querySelector('.setup-artifacts');
   var backpackCells = artifactsBackpack.querySelectorAll('.setup-artifacts .setup-artifacts-cell');
 
@@ -18,10 +20,7 @@
       var onMouseMove = function (moveEvt) {
         moveEvt.preventDefault();
 
-        var shift = new Coordinate(
-          startCoord.x - moveEvt.clientX,
-          startCoord.y - moveEvt.clientY
-        );
+        var shift = new Coordinate(startCoord.x - moveEvt.clientX, startCoord.y - moveEvt.clientY);
 
         startCoord = new Coordinate(moveEvt.clientX, moveEvt.clientY);
 
