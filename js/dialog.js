@@ -39,7 +39,6 @@
     return Math.round(Math.random() * (max - min)) + min;
   };
 
-
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = userDialog.querySelector('.setup-close');
   var setupUserName = userDialog.querySelector('.setup-user-name');
@@ -103,12 +102,14 @@
         randomValue = WIZARD_COAT_COLORS[getRandomNumber(0, WIZARD_COAT_COLORS.length)];
         wizardCoat.style.fill = randomValue;
         inputCoatColor.value = randomValue;
+        window.debounce(window.similar.onCoatChange.bind(null, randomValue));
         break;
 
       case wizardEyes:
         randomValue = WIZARD_EYES_COLORS[getRandomNumber(0, WIZARD_EYES_COLORS.length)];
         wizardEyes.style.fill = randomValue;
         inputEyesColor.value = randomValue;
+        window.debounce(window.similar.onEyesChange.bind(null, randomValue));
         break;
 
       case wizardFireball:
