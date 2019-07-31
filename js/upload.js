@@ -9,7 +9,6 @@
   fileChooser.addEventListener('change', function () {
     var file = fileChooser.files[0];
     var fileName = file.name.toLowerCase();
-
     var matches = FILE_TYPES.some(function (type) {
       return fileName.endsWith(type);
     });
